@@ -4,8 +4,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const app = express();
+const path = require('path');
+
 app.use(cors());
 app.use(express.json());
+
+
 
 // Serve static files from the React frontend
 app.use(express.static(path.join(__dirname, '../build')));
