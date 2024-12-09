@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 function ToDo() {
   const [todos, setTodos] = useState([]);
@@ -10,13 +10,8 @@ function ToDo() {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    if (token) {
-      fetchTodos();
-    }
-  }, [token]);
-
-  const fetchTodos = async () => {
+  // Memoized fetchTodos function
+  const fetchTodos = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch('http://localhost:5000/todos', {
@@ -24,15 +19,25 @@ function ToDo() {
           'Authorization': token,
         },
       });
+      if (!response.ok) {
+        throw new Error('Failed to fetch todos.');
+      }
       const data = await response.json();
       setTodos(data);
       setError('');
-    } catch (error) {
-      setError('Failed to fetch todos.');
+    } catch (err) {
+      setError(err.message || 'Failed to fetch todos.');
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  // Fetch todos when token changes
+  useEffect(() => {
+    if (token) {
+      fetchTodos();
+    }
+  }, [token, fetchTodos]);
 
   const addTodo = async () => {
     if (!newTodo) return;
