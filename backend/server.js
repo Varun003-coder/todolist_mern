@@ -25,11 +25,11 @@ app.get('*', (req, res) => {
 });
 
 // MongoDB connection
-mongoose.connect("mongodb+srv://saivarun:nuraV321@cluster0.8quna.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => console.log('MongoDB connected'))
+mongoose.connect("mongodb+srv://saivarun:nuraV321@cluster0.8quna.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+  .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
+
+  mongodb+srv://saivarun:nuraV321@cluster0.8quna.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
 // Models
 const UserSchema = new mongoose.Schema({
