@@ -7,6 +7,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the React frontend
+app.use(express.static(path.join(__dirname, '../build')));
+
+// API routes
+app.get('/api/example', (req, res) => {
+  res.json({ message: 'This is an API route' });
+});
+
+// Catch-all handler to serve React's index.html for any route not handled by API
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
+
 // MongoDB connection
 mongoose.connect("mongodb+srv://saivarun:nuraV321@cluster0.8quna.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
   useNewUrlParser: true,
