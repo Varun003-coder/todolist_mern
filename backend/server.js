@@ -29,7 +29,6 @@ mongoose.connect("mongodb+srv://saivarun:nuraV321@cluster0.8quna.mongodb.net/?re
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-  mongodb+srv://saivarun:nuraV321@cluster0.8quna.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
 // Models
 const UserSchema = new mongoose.Schema({
