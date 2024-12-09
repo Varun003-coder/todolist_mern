@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
+// Dynamically determine backend URL
+const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:5000';
+
 function ToDo() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
@@ -14,7 +17,7 @@ function ToDo() {
   const fetchTodos = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/todos', {
+      const response = await fetch(`${BASE_URL}/todos`, {
         headers: {
           'Authorization': token,
         },
@@ -43,7 +46,7 @@ function ToDo() {
     if (!newTodo) return;
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/todos', {
+      const response = await fetch(`${BASE_URL}/todos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +68,7 @@ function ToDo() {
   const deleteTodo = async (id) => {
     setLoading(true);
     try {
-      await fetch(`http://localhost:5000/todos/${id}`, {
+      await fetch(`${BASE_URL}/todos/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': token,
@@ -83,10 +86,10 @@ function ToDo() {
   const completeTodo = async (id) => {
     setLoading(true);
     try {
-      const todoToUpdate = todos.find(todo => todo._id === id);
+      const todoToUpdate = todos.find((todo) => todo._id === id);
       const updatedTodo = { ...todoToUpdate, completed: !todoToUpdate.completed };
 
-      const response = await fetch(`http://localhost:5000/todos/${id}`, {
+      const response = await fetch(`${BASE_URL}/todos/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +110,7 @@ function ToDo() {
   const register = async () => {
     setLoading(true);
     try {
-      await fetch('http://localhost:5000/register', {
+      await fetch(`${BASE_URL}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +128,7 @@ function ToDo() {
   const login = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/login', {
+      const response = await fetch(`${BASE_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
